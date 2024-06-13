@@ -29,6 +29,10 @@ used to allow posting alert messages to a [Matrix](https://matrix.org/) channel.
 * [JPMS-ready](https://en.wikipedia.org/wiki/Java_Platform_Module_System)
 * ISC license.
 
+## OCI
+
+OCI images are available at [quay.io](https://quay.io/repository/io7mcom/garriga).
+
 ## Usage
 
 Provide a configuration file providing the various required details. For
