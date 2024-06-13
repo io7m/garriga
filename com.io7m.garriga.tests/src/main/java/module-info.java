@@ -15,7 +15,7 @@
  */
 
 /**
- * Grafana → Matrix Alert Relay (Test suite)
+ * AlertManager → Matrix Alert Relay (Test suite)
  */
 
 open module com.io7m.garriga.tests

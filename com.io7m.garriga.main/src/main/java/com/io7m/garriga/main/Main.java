@@ -65,7 +65,7 @@ public final class Main implements Runnable
         "com.io7m.garriga",
         properties.getProperty("version"),
         properties.getProperty("commit"),
-        "Grafana → Matrix Alert Relay",
+        "AlertManager → Matrix Alert Relay",
         Optional.of(URI.create("https://www.io7m.com/software/garriga/"))
       );
 

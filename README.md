@@ -17,12 +17,14 @@ garriga
 
 ## garriga
 
-A [Grafana](https://grafana.com/) webhook used to allow posting alert
-messages to a [Matrix](https://matrix.org/) channel.
+An [AlertManager](https://prometheus.io/docs/alerting/latest/overview/) webhook
+used to allow posting alert messages to a [Matrix](https://matrix.org/) channel.
 
 ## Features
 
-* Post Grafana alerts to a Matrix channel.
+* Post AlertManager alerts to a Matrix channel.
+* Works with [Prometheus](https://prometheus.io/docs/alerting/latest/overview/).
+* Works with [Grafana Mimir](https://grafana.com/docs/mimir/latest/references/architecture/components/alertmanager/).
 * [OSGi-ready](https://www.osgi.org/)
 * [JPMS-ready](https://en.wikipedia.org/wiki/Java_Platform_Module_System)
 * ISC license.
@@ -120,3 +122,4 @@ An example of a real-life message is as follows:
   "truncatedAlerts": 0
 }
 ```
+

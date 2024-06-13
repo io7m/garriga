@@ -15,7 +15,7 @@
  */
 
 /**
- * Grafana → Matrix Alert Relay (Main)
+ * AlertManager → Matrix Alert Relay (Main)
  */
 
 @Export

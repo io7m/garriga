@@ -14,7 +14,7 @@
 
   <artifactId>com.io7m.garriga.tests</artifactId>
   <name>com.io7m.garriga.tests</name>
-  <description>Grafana → Matrix Alert Relay (Test suite)</description>
+  <description>AlertManager → Matrix Alert Relay (Test suite)</description>
   <url>https://www.io7m.com/software/garriga</url>
 
   <properties>

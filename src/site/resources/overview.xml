@@ -15,7 +15,8 @@
   </p>
 
   <p>
-    A <a href="https://grafana.com/">Grafana</a> webhook used to allow posting alert messages to a
+    An <a href="https://prometheus.io/docs/alerting/latest/overview/">AlertManager</a> webhook used to allow posting
+    alert messages to a
     <a href="https://matrix.org/">Matrix</a> channel.
   </p>
 </div>

@@ -15,7 +15,7 @@
   <artifactId>com.io7m.garriga.oci</artifactId>
 
   <name>com.io7m.garriga.oci</name>
-  <description>Grafana → Matrix Alert Relay (OCI)</description>
+  <description>AlertManager → Matrix Alert Relay (OCI)</description>
   <url>https://www.io7m.com/software/garriga/</url>
 
   <properties>
