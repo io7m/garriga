@@ -18,7 +18,6 @@
 package com.io7m.garriga.main.matrix;
 
 import com.io7m.garriga.main.matrix.GMatrixServiceStatusType.UnhealthyType.Failed;
-import com.io7m.repetoir.core.RPServiceType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,7 +39,7 @@ import static com.io7m.garriga.main.matrix.GMatrixServiceStatusType.UnhealthyTyp
  */
 
 public final class GMatrixService
-  implements RPServiceType, AutoCloseable, Runnable
+  implements Runnable, GMatrixServiceType
 {
   private static final Logger LOG =
     LoggerFactory.getLogger(GMatrixService.class);
@@ -138,18 +137,28 @@ public final class GMatrixService
           final var message =
             this.messageQueue.poll(1L, TimeUnit.SECONDS);
 
+          final var queueSize = this.messageQueue.size();
+          if (queueSize > 0) {
+            LOG.info("Message queue size: {}", queueSize);
+          }
+
           if (message != null) {
-            this.client.roomSendMessage(
-              this.token,
-              this.roomId,
-              message
-            );
+            try {
+              this.client.roomSendMessage(
+                this.token,
+                this.roomId,
+                message
+              );
+              this.pauseLong();
+            } catch (final Exception e) {
+              LOG.error("Failed to process message: ", e);
+              this.fail(e);
+              this.pauseLong();
+            }
           }
         }
-      } catch (final Exception e) {
-        LOG.error("Failed to process message: ", e);
-        this.fail(e);
-        this.pause();
+      } catch (final InterruptedException e) {
+        Thread.currentThread().interrupt();
       }
     }
   }
@@ -246,21 +255,22 @@ public final class GMatrixService
     }
   }
 
-  /**
-   * @return The matrix client service status.
-   */
+  private void pauseLong()
+  {
+    try {
+      Thread.sleep(5_000L);
+    } catch (final InterruptedException ex) {
+      Thread.currentThread().interrupt();
+    }
+  }
 
+  @Override
   public GMatrixServiceStatusType status()
   {
     return this.status.get();
   }
 
-  /**
-   * Send a message.
-   *
-   * @param message The message
-   */
-
+  @Override
   public void send(
     final GMatrixMessage message)
   {

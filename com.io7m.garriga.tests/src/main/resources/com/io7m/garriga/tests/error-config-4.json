@@ -1,0 +1,8 @@
+{
+  "%schema": "urn:com.io7m.garriga:configuration:1",
+
+  "HTTPServer": {
+    "ListenAddress": "::",
+    "ListenPort": "6000"
+  }
+}

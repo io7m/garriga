@@ -26,8 +26,9 @@ import java.util.Objects;
 /**
  * The HTTP server configuration.
  *
- * @param listenAddress The listen address
- * @param listenPort    The listen port
+ * @param listenAddress       The listen address
+ * @param listenPort          The listen port
+ * @param authenticationToken The required bearer token
  */
 
 @JsonDeserialize
@@ -36,17 +37,21 @@ public record GHTTPServerConfiguration(
   @JsonProperty(required = true, value = "ListenAddress")
   String listenAddress,
   @JsonProperty(required = true, value = "ListenPort")
-  int listenPort)
+  int listenPort,
+  @JsonProperty(required = true, value = "AuthenticationToken")
+  String authenticationToken)
 {
   /**
    * The HTTP server configuration.
    *
-   * @param listenAddress The listen address
-   * @param listenPort    The listen port
+   * @param listenAddress       The listen address
+   * @param listenPort          The listen port
+   * @param authenticationToken The required bearer token
    */
 
   public GHTTPServerConfiguration
   {
     Objects.requireNonNull(listenAddress, "listenAddress");
+    Objects.requireNonNull(authenticationToken, "authenticationToken");
   }
 }

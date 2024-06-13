@@ -27,9 +27,9 @@ import static com.fasterxml.jackson.databind.DeserializationFeature.FAIL_ON_UNKN
  * Functions to create JSON mappers for v1 messages.
  */
 
-public final class GMessageV1ObjectMappers
+public final class GMessageV4ObjectMappers
 {
-  private GMessageV1ObjectMappers()
+  private GMessageV4ObjectMappers()
   {
 
   }
@@ -47,8 +47,12 @@ public final class GMessageV1ObjectMappers
 
     final var deserializers =
       DmJsonRestrictedDeserializers.builder()
-        .allowClass(GMessageV1.class)
+        .allowClass(GAlertManagerRequestV4.class)
+        .allowClass(GAlertV4.class)
         .allowClass(String.class)
+        .allowClass(int.class)
+        .allowClassName("java.util.Map<java.lang.String,java.lang.String>")
+        .allowClassName("java.util.List<com.io7m.garriga.main.http.GAlertV4>")
         .build();
 
     final var simpleModule = new SimpleModule();

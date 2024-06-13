@@ -15,38 +15,23 @@
  */
 
 /**
- * Grafana → Matrix Alert Relay (Main)
+ * Grafana → Matrix Alert Relay (Test suite)
  */
 
-module com.io7m.garriga.main
+open module com.io7m.garriga.tests
 {
-  requires static org.osgi.annotation.versioning;
-  requires static org.osgi.annotation.bundle;
+  requires org.junit.jupiter.api;
+  requires org.junit.jupiter.engine;
+  requires org.junit.platform.commons;
+  requires org.junit.platform.engine;
+  requires org.junit.platform.launcher;
 
-  requires com.fasterxml.jackson.databind;
-  requires com.io7m.dixmont.core;
-  requires com.io7m.quarrel.core;
-  requires com.io7m.quarrel.ext.logback;
-  requires com.io7m.repetoir.core;
   requires io.helidon.webserver;
-  requires java.net.http;
-  requires jul.to.slf4j;
-  requires org.apache.commons.text;
+  requires com.fasterxml.jackson.databind;
+  requires com.io7m.garriga.main;
+  requires com.io7m.repetoir.core;
+  requires org.mockito;
   requires org.slf4j;
 
-  exports com.io7m.garriga.main;
-
-  opens com.io7m.garriga.main.matrix
-    to com.fasterxml.jackson.databind;
-  opens com.io7m.garriga.main.server
-    to com.fasterxml.jackson.databind;
-  opens com.io7m.garriga.main.http
-    to com.fasterxml.jackson.databind;
-
-  exports com.io7m.garriga.main.matrix
-    to com.io7m.garriga.tests;
-  exports com.io7m.garriga.main.server
-    to com.io7m.garriga.tests;
-  exports com.io7m.garriga.main.http
-    to com.io7m.garriga.tests;
+  exports com.io7m.garriga.tests;
 }

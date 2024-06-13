@@ -17,9 +17,9 @@
 
 package com.io7m.garriga.main.http;
 
-import com.io7m.garriga.main.matrix.GMatrixService;
 import com.io7m.garriga.main.matrix.GMatrixServiceStatusType.HealthyType;
 import com.io7m.garriga.main.matrix.GMatrixServiceStatusType.UnhealthyType;
+import com.io7m.garriga.main.matrix.GMatrixServiceType;
 import com.io7m.repetoir.core.RPServiceDirectoryType;
 import io.helidon.http.HeaderNames;
 import io.helidon.webserver.http.Handler;
@@ -37,7 +37,7 @@ public final class GHandlerHealth implements Handler
   private static final Logger LOG =
     LoggerFactory.getLogger(GHandlerHealth.class);
 
-  private final GMatrixService matrixClient;
+  private final GMatrixServiceType matrixClient;
 
   /**
    * The health handler.
@@ -49,7 +49,7 @@ public final class GHandlerHealth implements Handler
     final RPServiceDirectoryType inServices)
   {
     this.matrixClient =
-      inServices.requireService(GMatrixService.class);
+      inServices.requireService(GMatrixServiceType.class);
   }
 
   @Override

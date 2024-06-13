@@ -15,39 +15,28 @@
  */
 
 
-package com.io7m.garriga.main.http;
+package com.io7m.garriga.main.matrix;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-
-import java.util.Objects;
+import com.io7m.repetoir.core.RPServiceType;
 
 /**
- * The type of v1 Grafana messages.
- *
- * @param status The status
- * @param title  The title
+ * The matrix service.
  */
 
-@JsonDeserialize
-@JsonSerialize
-public record GMessageV1(
-  @JsonProperty(value = "status", required = true)
-  String status,
-  @JsonProperty(value = "title", required = true)
-  String title)
+public interface GMatrixServiceType
+  extends RPServiceType, AutoCloseable
 {
   /**
-   * The type of v1 Grafana messages.
-   *
-   * @param status The status
-   * @param title  The title
+   * @return The matrix client service status.
    */
 
-  public GMessageV1
-  {
-    Objects.requireNonNull(status, "status");
-    Objects.requireNonNull(title, "title");
-  }
+  GMatrixServiceStatusType status();
+
+  /**
+   * Send a message.
+   *
+   * @param message The message
+   */
+
+  void send(GMatrixMessage message);
 }

@@ -38,7 +38,8 @@ example, assume the following content in a file named `config.json`:
 
   "HTTPServer": {
     "ListenAddress": "::",
-    "ListenPort": 6000
+    "ListenPort": 6000,
+    "AuthenticationToken": "some-random-token-value"
   },
 
   "MatrixClient": {
@@ -52,13 +53,70 @@ example, assume the following content in a file named `config.json`:
 
 Run `garriga server --configuration-file config.json`. The server will
 bind to all addresses, listening on port `6000`, and will attempt to connect
-to the given Matrix server using the provided credentials.
+to the given Matrix server using the provided credentials. Anyone talking
+to the server will be required to supply an
+`Authorization: Bearer some-random-token-value` header.
 
-Specify a [webhook contact point](https://grafana.com/docs/grafana/latest/alerting/fundamentals/notifications/contact-points/)
-in Grafana. If the `garriga` server is running on `alerts.example.com`, then
-specify the following webhook:
+### WebHook
 
-`http://alerts.example.com:6000/1/send`
+The server exposes an endpoint at `/4/send` that expects `POST` requests
+supplying data in the version 4 [AlertManager](https://prometheus.io/docs/alerting/latest/configuration/#webhook_config)
+format.
 
-![contact](src/site/resources/contact.png)
+An example of a real-life message is as follows:
 
+```
+{
+  "receiver": "matrix-webhook",
+  "status": "firing",
+  "alerts": [
+    {
+      "status": "firing",
+      "labels": {
+        "alertname": "HostFilesystemDeviceError",
+        "device": "srv/grafana01/matrix_forwarder/etc",
+        "fstype": "zfs",
+        "instance": "srv.example.com:9100",
+        "job": "dns-discovery",
+        "mountpoint": "/srv/grafana01/matrix_forwarder/etc",
+        "severity": "critical"
+      },
+      "annotations": {
+        "description": "srv.example.com:9100: Device error with the /srv/grafana01/matrix_forwarder/etc filesystem\n  VALUE = 1\n  LABELS = map[__name__:node_filesystem_device_error device:srv/grafana01/matrix_forwarder/etc fstype:zfs instance:srv.example.com:9100 job:dns-discovery mountpoint:/srv/grafana01/matrix_forwarder/etc]",
+        "summary": "Host filesystem device error (instance srv.example.com:9100)"
+      },
+      "startsAt": "2024-06-13T17:06:10.763Z",
+      "endsAt": "0001-01-01T00:00:00Z",
+      "generatorURL": "/graph?g0.expr=node_filesystem_device_error%7Bfstype%3D~%22ext2%7Cext4%7Czfs%7Cxfs%7Cvfat%22%7D+%3D%3D+1\u0026g0.tab=1",
+      "fingerprint": "530731b28264424f"
+    },
+    {
+      "status": "resolved",
+      "labels": {
+        "alertname": "HostSwapIsFillingUp",
+        "instance": "w01.example.com:9100",
+        "job": "dns-discovery",
+        "nodename": "w01",
+        "severity": "warning"
+      },
+      "annotations": {
+        "description": "Swap is filling up (\u003e80%)\n  VALUE = 98.72484146349024\n  LABELS = map[instance:w01.example.com:9100 job:dns-discovery nodename:workstation01]",
+        "summary": "Host swap is filling up (instance w01.example.com:9100)"
+      },
+      "startsAt": "2024-06-13T11:53:10.763Z",
+      "endsAt": "0001-01-01T00:00:00Z",
+      "generatorURL": "/graph?g0.expr=%28%281+-+%28node_memory_SwapFree_bytes+%2F+node_memory_SwapTotal_bytes%29%29+%2A+100+%3E+80%29+%2A+on+%28instance%29+group_left+%28nodename%29+node_uname_info%7Bnodename%3D~%22.%2B%22%7D\u0026g0.tab=1",
+      "fingerprint": "983929006a0177d3"
+    }
+  ],
+  "groupLabels": {},
+  "commonLabels": {
+    "job": "dns-discovery"
+  },
+  "commonAnnotations": {},
+  "externalURL": "http://localhost:8080/alertmanager",
+  "version": "4",
+  "groupKey": "{}/{}:{}",
+  "truncatedAlerts": 0
+}
+```

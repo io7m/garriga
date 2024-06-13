@@ -1,0 +1,7 @@
+{
+  "%schema": "urn:com.io7m.garriga:configuration:1",
+
+  "HTTPServer": {
+
+  }
+}

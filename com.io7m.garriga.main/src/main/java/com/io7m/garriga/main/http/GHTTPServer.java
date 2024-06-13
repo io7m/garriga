@@ -40,6 +40,7 @@ public final class GHTTPServer implements AutoCloseable, RPServiceType
 {
   private static final Logger LOG =
     LoggerFactory.getLogger(GHTTPServer.class);
+
   private final WebServer webServer;
 
   private GHTTPServer(
@@ -68,7 +69,7 @@ public final class GHTTPServer implements AutoCloseable, RPServiceType
     final var routing =
       HttpRouting.builder()
         .get("/health", new GHandlerHealth(services))
-        .post("/1/send", new GHandlerV1(services));
+        .post("/4/send", new GHandlerV4(services, configuration));
 
     final var webServerBuilder =
       WebServerConfig.builder();

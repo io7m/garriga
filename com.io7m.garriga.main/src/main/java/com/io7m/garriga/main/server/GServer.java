@@ -19,6 +19,7 @@ package com.io7m.garriga.main.server;
 
 import com.io7m.garriga.main.http.GHTTPServer;
 import com.io7m.garriga.main.matrix.GMatrixService;
+import com.io7m.garriga.main.matrix.GMatrixServiceType;
 import com.io7m.repetoir.core.RPServiceDirectory;
 import com.io7m.repetoir.core.RPServiceDirectoryWritableType;
 
@@ -76,7 +77,7 @@ public final class GServer implements AutoCloseable
     if (this.closed.compareAndSet(true, false)) {
       this.services = new RPServiceDirectory();
       this.services.register(
-        GMatrixService.class,
+        GMatrixServiceType.class,
         GMatrixService.create(
           this.configuration.matrixConfiguration()
         )

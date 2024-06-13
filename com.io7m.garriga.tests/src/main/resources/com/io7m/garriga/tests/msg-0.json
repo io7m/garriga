@@ -1,55 +1,3 @@
-
-## garriga
-
-A [Grafana](https://grafana.com/) webhook used to allow posting alert
-messages to a [Matrix](https://matrix.org/) channel.
-
-## Features
-
-* Post Grafana alerts to a Matrix channel.
-* [OSGi-ready](https://www.osgi.org/)
-* [JPMS-ready](https://en.wikipedia.org/wiki/Java_Platform_Module_System)
-* ISC license.
-
-## Usage
-
-Provide a configuration file providing the various required details. For
-example, assume the following content in a file named `config.json`:
-
-```
-{
-  "%schema": "urn:com.io7m.garriga:configuration:1",
-
-  "HTTPServer": {
-    "ListenAddress": "::",
-    "ListenPort": 6000,
-    "AuthenticationToken": "some-random-token-value"
-  },
-
-  "MatrixClient": {
-    "BaseURI": "https://matrix.example.com",
-    "User": "@alerts:matrix.example.com",
-    "Password": "changeit",
-    "Channel": "#alerts:matrix.example.com"
-  }
-}
-```
-
-Run `garriga server --configuration-file config.json`. The server will
-bind to all addresses, listening on port `6000`, and will attempt to connect
-to the given Matrix server using the provided credentials. Anyone talking
-to the server will be required to supply an
-`Authorization: Bearer some-random-token-value` header.
-
-### WebHook
-
-The server exposes an endpoint at `/4/send` that expects `POST` requests
-supplying data in the version 4 [AlertManager](https://prometheus.io/docs/alerting/latest/configuration/#webhook_config)
-format.
-
-An example of a real-life message is as follows:
-
-```
 {
   "receiver": "matrix-webhook",
   "status": "firing",
@@ -103,4 +51,3 @@ An example of a real-life message is as follows:
   "groupKey": "{}/{}:{}",
   "truncatedAlerts": 0
 }
-```

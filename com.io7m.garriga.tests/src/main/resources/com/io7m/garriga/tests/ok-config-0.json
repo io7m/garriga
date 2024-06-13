@@ -1,0 +1,16 @@
+{
+  "%schema": "urn:com.io7m.garriga:configuration:1",
+
+  "HTTPServer": {
+    "ListenAddress": "::",
+    "ListenPort": 6000,
+    "AuthenticationToken": "3c929c0c0ac221dbc58b053f387e8655d2c59caec723e88eaf812e57c900e44b"
+  },
+
+  "MatrixClient": {
+    "BaseURI": "https://matrix.example.com",
+    "User": "@someone:matrix.example.com",
+    "Password": "5ad02f638d672e0004d2614e9a37a96ccdf8fd5d1edce3247f41fdbbf5d4a475",
+    "Channel": "#lobby:matrix.example.com"
+  }
+}
